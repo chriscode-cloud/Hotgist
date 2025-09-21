@@ -1,0 +1,38 @@
+{
+  "name": "hotgist",
+  "version": "1.0.0",
+  "description": "A full-stack social media app with React Native frontend and Node.js backend",
+  "main": "server/index.js",
+  "scripts": {
+    "start": "node server/index.js",
+    "dev": "nodemon server/index.js",
+    "client": "cd client && npm start",
+    "install-all": "npm install && cd client && npm install"
+  },
+  "keywords": [
+    "social-media",
+    "react-native",
+    "express",
+    "firebase"
+  ],
+  "author": "HotGist Team",
+  "license": "MIT",
+  "dependencies": {
+    "@react-native-firebase/auth": "^23.3.1",
+    "@react-native/babel-preset": "^0.81.1",
+    "cors": "^2.8.5",
+    "dotenv": "^16.3.1",
+    "expo-constants": "^18.0.8",
+    "expo-device": "~8.0.7",
+    "express": "^4.21.2",
+    "express-rate-limit": "^7.1.5",
+    "firebase-admin": "^13.5.0",
+    "helmet": "^7.1.0",
+    "multer": "^1.4.5-lts.1",
+    "react-native-worklets": "^0.5.1"
+  },
+  "devDependencies": {
+    "@react-native-community/cli": "^20.0.2",
+    "nodemon": "^3.0.2"
+  }
+}

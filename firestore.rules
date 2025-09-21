@@ -1,0 +1,153 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    
+    // Helper functions
+    function isAuthenticated() {
+      return request.auth != null;
+    }
+    
+    function isOwner(userId) {
+      return request.auth.uid == userId;
+    }
+    
+    function isValidPostData() {
+      return request.resource.data.keys().hasAll(['content', 'authorId', 'createdAt', 'updatedAt']) &&
+             request.resource.data.content is string &&
+             request.resource.data.content.size() > 0 &&
+             request.resource.data.content.size() <= 1000 &&
+             request.resource.data.authorId is string &&
+             request.resource.data.authorId == request.auth.uid &&
+             request.resource.data.createdAt is timestamp &&
+             request.resource.data.updatedAt is timestamp;
+    }
+    
+    function isValidReactionData() {
+      return request.resource.data.keys().hasAll(['postId', 'userId', 'type', 'createdAt']) &&
+             request.resource.data.postId is string &&
+             request.resource.data.userId is string &&
+             request.resource.data.userId == request.auth.uid &&
+             request.resource.data.type in ['fire', 'laugh', 'shock'] &&
+             request.resource.data.createdAt is timestamp;
+    }
+    
+    function isValidCommentData() {
+      return request.resource.data.keys().hasAll(['postId', 'content', 'authorId', 'createdAt', 'updatedAt']) &&
+             request.resource.data.postId is string &&
+             request.resource.data.content is string &&
+             request.resource.data.content.size() > 0 &&
+             request.resource.data.content.size() <= 500 &&
+             request.resource.data.authorId is string &&
+             request.resource.data.authorId == request.auth.uid &&
+             request.resource.data.createdAt is timestamp &&
+             request.resource.data.updatedAt is timestamp;
+    }
+    
+    function isValidUserData() {
+      return request.resource.data.keys().hasAll(['uid', 'displayName', 'createdAt', 'updatedAt']) &&
+             request.resource.data.uid is string &&
+             request.resource.data.uid == request.auth.uid &&
+             request.resource.data.displayName is string &&
+             request.resource.data.displayName.size() > 0 &&
+             request.resource.data.createdAt is timestamp &&
+             request.resource.data.updatedAt is timestamp;
+    }
+
+    // Posts collection rules
+    match /posts/{postId} {
+      // Allow anyone to read posts (authenticated or not)
+      allow read: if true;
+      
+      // Allow creating posts only if authenticated (including anonymous)
+      allow create: if isAuthenticated() && isValidPostData();
+      
+      // Allow updating posts only by the author
+      allow update: if isAuthenticated() && 
+                      isOwner(resource.data.authorId) &&
+                      // Ensure authorId cannot be changed
+                      request.resource.data.authorId == resource.data.authorId &&
+                      // Validate updated data
+                      request.resource.data.content is string &&
+                      request.resource.data.content.size() > 0 &&
+                      request.resource.data.content.size() <= 1000 &&
+                      request.resource.data.updatedAt is timestamp;
+      
+      // Allow deleting posts only by the author
+      allow delete: if isAuthenticated() && isOwner(resource.data.authorId);
+    }
+
+    // Reactions collection rules
+    match /reactions/{reactionId} {
+      // Allow anyone to read reactions
+      allow read: if true;
+      
+      // Allow creating reactions only if authenticated
+      allow create: if isAuthenticated() && isValidReactionData();
+      
+      // Allow updating reactions only by the user who created them
+      allow update: if isAuthenticated() && 
+                      isOwner(resource.data.userId) &&
+                      // Ensure userId and postId cannot be changed
+                      request.resource.data.userId == resource.data.userId &&
+                      request.resource.data.postId == resource.data.postId &&
+                      // Validate reaction type
+                      request.resource.data.type in ['fire', 'laugh', 'shock'];
+      
+      // Allow deleting reactions only by the user who created them
+      allow delete: if isAuthenticated() && isOwner(resource.data.userId);
+    }
+
+    // Comments collection rules
+    match /comments/{commentId} {
+      // Allow anyone to read comments
+      allow read: if true;
+      
+      // Allow creating comments only if authenticated
+      allow create: if isAuthenticated() && isValidCommentData();
+      
+      // Allow updating comments only by the author
+      allow update: if isAuthenticated() && 
+                      isOwner(resource.data.authorId) &&
+                      // Ensure authorId and postId cannot be changed
+                      request.resource.data.authorId == resource.data.authorId &&
+                      request.resource.data.postId == resource.data.postId &&
+                      // Validate updated content
+                      request.resource.data.content is string &&
+                      request.resource.data.content.size() > 0 &&
+                      request.resource.data.content.size() <= 500 &&
+                      request.resource.data.updatedAt is timestamp;
+      
+      // Allow deleting comments only by the author
+      allow delete: if isAuthenticated() && isOwner(resource.data.authorId);
+    }
+
+    // Users collection rules
+    match /users/{userId} {
+      // Allow anyone to read user profiles (for displaying author info)
+      allow read: if true;
+      
+      // Allow creating user profiles only if authenticated and for own profile
+      allow create: if isAuthenticated() && 
+                      isOwner(userId) && 
+                      isValidUserData();
+      
+      // Allow updating user profiles only by the user themselves
+      allow update: if isAuthenticated() && 
+                      isOwner(userId) &&
+                      // Ensure uid cannot be changed
+                      request.resource.data.uid == resource.data.uid &&
+                      // Validate updated data
+                      request.resource.data.displayName is string &&
+                      request.resource.data.displayName.size() > 0 &&
+                      request.resource.data.updatedAt is timestamp;
+      
+      // Allow deleting user profiles only by the user themselves
+      allow delete: if isAuthenticated() && isOwner(userId);
+    }
+
+    // Deny all other collections
+    match /{document=**} {
+      allow read, write: if false;
+    }
+  }
+}
