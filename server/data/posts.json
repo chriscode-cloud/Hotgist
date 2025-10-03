@@ -1,0 +1,41 @@
+{
+  "posts": [
+    {
+      "id": "welcome_post_001",
+      "content": "🎉 Welcome to HotGist! Your anonymous campus social platform is now live! Share your thoughts, connect with your campus community, and stay updated with what's happening around you.",
+      "author": "HotGist Team",
+      "campus": "GCTU",
+      "timestamp": "2025-01-01T06:00:00.000Z",
+      "isAnonymous": false,
+      "likes": [],
+      "comments": []
+    },
+    {
+      "id": "sample_post_001",
+      "content": "Just finished my morning lecture! The campus is buzzing with energy today ☀️ #CampusLife",
+      "author": "EarlyBird",
+      "campus": "GCTU",
+      "timestamp": "2025-01-01T05:45:00.000Z",
+      "isAnonymous": true,
+      "likes": ["user_anon_001"],
+      "comments": []
+    },
+    {
+      "id": "sample_post_002",
+      "content": "Anyone know where I can find good study spots on campus? Looking for somewhere quiet and well-lit 📚",
+      "author": "StudySeeker",
+      "campus": "UG",
+      "timestamp": "2025-01-01T05:30:00.000Z",
+      "isAnonymous": true,
+      "likes": [],
+      "comments": [
+        {
+          "id": "comment_001",
+          "content": "Try the main library on the 3rd floor! Very quiet and great lighting.",
+          "author": "LibraryLover",
+          "timestamp": "2025-01-01T05:35:00.000Z"
+        }
+      ]
+    }
+  ]
+}

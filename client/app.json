@@ -4,10 +4,10 @@
     "slug": "hotgist",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/icon.png",
+    "icon": "./assets/icon.svg",
     "userInterfaceStyle": "light",
     "splash": {
-      "image": "./assets/splash.png",
+      "image": "./assets/splash.svg",
       "resizeMode": "contain",
       "backgroundColor": "#ffffff"
     },
@@ -15,42 +15,15 @@
       "**/*"
     ],
     "ios": {
-      "supportsTablet": true,
-      "infoPlist": {
-        "NSPhotoLibraryUsageDescription": "Allow $(PRODUCT_NAME) to access your photos",
-        "NSPhotoLibraryAddUsageDescription": "Allow $(PRODUCT_NAME) to save photos"
-      }
+      "supportsTablet": true
     },
     "android": {
       "adaptiveIcon": {
-        "foregroundImage": "./assets/adaptive-icon.png",
-        "backgroundColor": "#FFFFFF"
-      },
-      "permissions": [
-        "android.permission.RECORD_AUDIO",
-        "android.permission.CAMERA",
-        "android.permission.READ_EXTERNAL_STORAGE",
-        "android.permission.WRITE_EXTERNAL_STORAGE"
-      ],
-      "package": "com.anonymous.hotgist"
+        "foregroundImage": "./assets/adaptive-icon.svg",
+        "backgroundColor": "#ffffff"
+      }
     },
     "web": {
-      "favicon": "./assets/favicon.png"
-    },
-    "plugins": [
-      "expo-image-picker",
-      "expo-camera",
-      "expo-media-library"
-    ],
-    "extra": {
-  "firebaseApiKey": "AIzaSyC2dg7vSBYMVr8m7RTAYiGlo3YDfzyn6GM",
-  "firebaseAuthDomain": "hostgist-71852.firebaseapp.com",
-  "firebaseProjectId": "hostgist-71852",
-  "firebaseStorageBucket": "hostgist-71852.appspot.com",
-  "firebaseMessagingSenderId": "115420328922",
-  "firebaseAppId": "1:115420328922:web:6724354b076b7624713922"
-}
     }
   }
-
-
+}

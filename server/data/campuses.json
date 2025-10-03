@@ -1,0 +1,68 @@
+{
+  "campuses": [
+    {
+      "id": "GCTU",
+      "name": "Ghana Communication Technology University",
+      "code": "GCTU",
+      "location": "Accra",
+      "type": "Technical",
+      "description": "Leading ICT university in Ghana"
+    },
+    {
+      "id": "UG",
+      "name": "University of Ghana",
+      "code": "UG",
+      "location": "Accra",
+      "type": "Public",
+      "description": "Premier university in Ghana"
+    },
+    {
+      "id": "KNUST",
+      "name": "Kwame Nkrumah University of Science and Technology",
+      "code": "KNUST",
+      "location": "Kumasi",
+      "type": "Technical",
+      "description": "Top science and technology university"
+    },
+    {
+      "id": "UCC",
+      "name": "University of Cape Coast",
+      "code": "UCC",
+      "location": "Cape Coast",
+      "type": "Public",
+      "description": "Excellence in teacher education"
+    },
+    {
+      "id": "UPSA",
+      "name": "University of Professional Studies",
+      "code": "UPSA",
+      "location": "Accra",
+      "type": "Public",
+      "description": "Business and professional studies"
+    },
+    {
+      "id": "UENR",
+      "name": "University of Energy and Natural Resources",
+      "code": "UENR",
+      "location": "Sunyani",
+      "type": "Technical",
+      "description": "Energy and natural resources focus"
+    },
+    {
+      "id": "UMaT",
+      "name": "University of Mines and Technology",
+      "code": "UMaT",
+      "location": "Tarkwa",
+      "type": "Technical",
+      "description": "Mining and technology education"
+    },
+    {
+      "id": "UDS",
+      "name": "University for Development Studies",
+      "code": "UDS",
+      "location": "Tamale",
+      "type": "Public",
+      "description": "Development-focused education"
+    }
+  ]
+}
